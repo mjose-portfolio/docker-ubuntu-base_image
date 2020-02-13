@@ -68,7 +68,7 @@ $minimal_apt_get_install runit cron
 ## Install cron daemon.
 mkdir -p /etc/service/cron
 mkdir -p /var/log/cron
-chmod 600 /etc/crontabs
+chmod 600 /etc/crontab
 cp /build/runit/cron /etc/service/cron/run
 cp /build/config/cron_log_config /var/log/cron/config
 chown -R nobody  /var/log/cron
@@ -83,11 +83,13 @@ rm -f /etc/cron.daily/password
 rm -f /etc/cron.weekly/fstrim 
 
 ## Often used tools.
-$minimal_apt_get_install curl less nano psmisc wget
+$minimal_apt_get_install curl less vim psmisc wget zsh git
+
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
 #fix other small problem.
 rm /bin/sh
-ln -s /bin/bash /bin/sh
+ln -s /bin/zsh /bin/sh
 echo `. /etc/lsb-release; echo ${DISTRIB_CODENAME/*, /}` >> /etc/container_environment/DISTRIB_CODENAME
 
 #cleanup

@@ -153,7 +153,7 @@ The multiple formats makes it easy for you to query the original environment var
 
 Here is an example shell session showing you how the dumps look like:
 
-![dumps](/Users/akira/Projects/docker/base images/ubuntu/docs/resources/dumps.gif)
+![dumps](./docs/resources/dumps.gif)
 
 
 #### Modifying environment variables
@@ -207,13 +207,13 @@ This will perform the following:
 
 For example:
 
-![dumps](/Users/akira/Projects/docker/base images/ubuntu/docs/resources/standard_ls_example.gif)
+![dumps](./docs/resources/standard_ls_example.gif)
 
  Perhaps you don't want to run the startup files. You can customize all this by passing arguments to `my_init`. Invoke `docker run YOUR_IMAGE /sbin/my_init --help` for more information.
 
 The following example runs `ls` without running the startup files, while running all runit services:
 
-![dumps](/Users/akira/Projects/docker/base images/ubuntu/docs/resources/skip_ls_example.gif)
+![dumps](./docs/resources/skip_ls_example.gif)
 
 
 ### Running a command in an existing, running container

@@ -4,7 +4,9 @@
 
 Ubuntu base image for docker container. https://mjose-portfolio.github.io/
 
-The docker-ubuntu-base_image base on ubuntu with runit to be able to run different process inside the container. It is using default tools already include in runit for logs, cron, etc (svlogd, crond, pstree, sv,chpst). it support tags (version-16.04, version-17.04, version-18.04 and version-19.04)
+![Docker](https://github.com/mjose-portfolio/docker-ubuntu-base_image/workflows/Docker/badge.svg)![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/mjoseportfolio/ubuntu-bi?logo=Docker)![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/mjoseportfolio/ubuntu-bi?logo=docker)
+
+The docker-ubuntu-base_image base on ubuntu with runit to be able to run different process inside the container. It is using default tools already include in runit for logs, cron, etc (svlogd, crond, pstree, sv,chpst). it support tags (16.04, 17.04, 18.04 and 19.04)
 
 This image will be use to builds others image for other projects. It will be build periodical to make sure that any security update is include with the last version from ubuntu repository.
 

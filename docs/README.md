@@ -1,42 +1,60 @@
+![Ubuntu_Logo](/Users/akira/Projects/docker/base images/ubuntu/docs/resources/Ubuntu_Logo.png)
+
 # docker-ubuntu-base_image
+
 Ubuntu base image for docker container. https://mjose-portfolio.github.io/
-For smaller Baseimage size please check [QuantumObject/docker-alpine](https://github.com/QuantumObject/docker-alpine)
 
-docker-baseimage
-================
-[![](https://images.microbadger.com/badges/image/quantumobject/docker-baseimage.svg)](https://microbadger.com/images/quantumobject/docker-baseimage "Get your own image badge on microbadger.com")
+The docker-ubuntu-base_image base on ubuntu with runit to be able to run different process inside the container. It is using default tools already include in runit for logs, cron, etc (svlogd, crond, pstree, sv,chpst). it support tags (version-16.04, version-17.04, version-18.04 and version-19.04)
 
+This image will be use to builds others image for other projects. It will be build periodical to make sure that any security update is include with the last version from ubuntu repository.
 
-The docker-baseimage base on ubuntu with runit to be able to run different process inside the container. It is using default tools already include in runit for logs,cron,etc (svlogd,crond,pstree,sv,chpst). it support tags (17.04, 18.04 and 19.04)
-
-This image will be use to builds others image for [quantumobject](http://www.quantumobject.com) at the moment. It will be build periodical to make sure that any security update is include with the last version from ubuntu repository .
-
-## Using docker-baseimage as base image
+## Using docker-ubuntu-base_image as base image
 
 ### Getting started
 
-The image is called `quantumobject/docker-baseimage`, and is available on the Docker registry.
+The image is called `mjoseportfolio/ubuntu-bi`, and is available on the Docker registry.
 
-   
-    FROM quantumobject/docker-baseimage
-    
-    # Use baseimage-docker's init system.
-    CMD ["/sbin/my_init"]
-    
-    # ...put your own build instructions here...
+
+```dockerfile
+FROM mjoseportfolio/ubuntu-bi
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+
+# ...put your own build instructions here...
+```
 
 ### Using different ubuntu release 
 
 The docker-baseimage is base on ubuntu image , you can define what version of ubuntu you want to used by using tags
 
-      # for Ubuntu Disco Dingo
-      FROM  quantumobject/docker-baseimage:19.04
+```dockerfile
+  # for Ubuntu Disco Dingo
+  FROM  quantumobject/docker-baseimage:version-19.04
+```
 
- or
-   
-      # for ubuntu Bionic Beaver
-      FROM quantumobject/docker-baseimage:18.04
+```dockerfile
+  # for ubuntu Bionic Beaver
+  FROM quantumobject/docker-baseimage:version-18.04
+```
 
+
+
+```dockerfile
+  # for ubuntu Zesty Zapus
+  FROM quantumobject/docker-baseimage:version-17.04
+```
+
+
+### 
+
+```dockerfile
+  # for ubuntu Xenial Xerus
+  FROM quantumobject/docker-baseimage:version-16.04
+```
+
+
+### 
 
 ### Adding additional daemons
 
@@ -46,16 +64,18 @@ The shell script must be called `run`, must be executable, and is to be placed i
 
 Here's an example showing you how a memcached server runit entry can be made.
 
-    #!/bin/sh
-    ### In memcached.sh (make sure this file is chmod +x):
-    # `chpst -u memcache` runs the given command as the user `memcache`.
-    # If you omit that part, the command will be run as root.
-    exec 2>&1 chpst -u memcache /usr/bin/memcached
+```shell
+#!/bin/sh
+### In memcached.sh (make sure this file is chmod +x):
+# `chpst -u memcache` runs the given command as the user `memcache`.
+# If you omit that part, the command will be run as root.
+exec 2>&1 chpst -u memcache /usr/bin/memcached
 
-    ### In Dockerfile:
-    RUN mkdir /etc/service/memcached
-    ADD memcached.sh /etc/service/memcached/run
-    RUN chmod +x /etc/service/memcached/run
+### In Dockerfile:
+RUN mkdir /etc/service/memcached
+ADD memcached.sh /etc/service/memcached/run
+RUN chmod +x /etc/service/memcached/run
+```
 
 Note that the shell script must run the daemon **without letting it daemonize/fork it**. Usually, daemons provide a command line flag or a config file option for that.
 
@@ -71,13 +91,15 @@ All scripts must exit correctly, e.g. with exit code 0. If any script exits with
 
 The following example shows how you can add a startup script. This script simply logs the time of boot to the file /tmp/boottime.txt.
 
-    #!/bin/sh
-    ### In logtime.sh (make sure this file is chmod +x):
-    date > /tmp/boottime.txt
+```shell
+#!/bin/sh
+### In logtime.sh (make sure this file is chmod +x):
+date > /tmp/boottime.txt
 
-    ### In Dockerfile:
-    RUN mkdir -p /etc/my_init.d
-    ADD logtime.sh /etc/my_init.d/logtime.sh
+### In Dockerfile:
+RUN mkdir -p /etc/my_init.d
+ADD logtime.sh /etc/my_init.d/logtime.sh
+```
 
 
 ### Environment variables
@@ -97,20 +119,26 @@ During startup, before running any startup scripts, `my_init` imports environmen
 
 For example, here's how you can define an environment variable from your Dockerfile:
 
-    RUN echo Apachai Hopachai > /etc/container_environment/MY_NAME
+```dockerfile
+RUN echo Apachai Hopachai > /etc/container_environment/MY_NAME
+```
 
 You can verify that it works, as follows:
 
-    $ docker run -t -i <YOUR_NAME_IMAGE> /sbin/my_init -- bash -l
-    ...
-    *** Running bash -l...
-    # echo $MY_NAME
-    Apachai Hopachai
-    
+```bash
+$ docker run -t -i <YOUR_NAME_IMAGE> /sbin/my_init -- bash -l
+...
+*** Running bash -l...
+# echo $MY_NAME
+Apachai Hopachai
+```
+
 If you've looked carefully, you'll notice that the 'echo' command actually prints a newline. Why does $MY_NAME not contain a newline then? It's because `my_init` strips the trailing newline, if any. If you intended on the value having a newline, you should add *another* newline, like this:
 
-    RUN echo -e "Apachai Hopachai\n" > /etc/container_environment/MY_NAME
-    
+```dockerfile
+RUN echo -e "Apachai Hopachai\n" > /etc/container_environment/MY_NAME
+```
+
 #### Environment variable dumps
 
 While the previously mentioned mechanism is good for centrally defining environment variables, it by itself does not prevent services (e.g. Nginx) from changing and resetting environment variables from child processes. However, the `my_init` mechanism does make it easy for you to query what the original environment variables are.
@@ -125,21 +153,23 @@ The multiple formats makes it easy for you to query the original environment var
 
 Here is an example shell session showing you how the dumps look like:
 
-    $ docker run -t -i \
-      --env FOO=bar --env HELLO='my beautiful world' \
-      quantumobject/docker-baseimage /sbin/my_init -- \
-      bash -l
-    ...
-    *** Running bash -l...
-    # ls /etc/container_environment
-    FOO  HELLO  HOME  HOSTNAME  PATH  TERM  container
-    # cat /etc/container_environment/HELLO; echo
-    my beautiful world
-    # cat /etc/container_environment.json; echo
-    {"TERM": "xterm", "container": "lxc", "HOSTNAME": "f45449f06950", "HOME": "/root", "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "FOO": "bar", "HELLO": "my beautiful world"}
-    # source /etc/container_environment.sh
-    # echo $HELLO
-    my beautiful world
+```shell
+$ docker run -t -i \
+  --env FOO=bar --env HELLO='my beautiful world' \
+  mjoseportfolio/ubuntu-bi /sbin/my_init -- \
+  bash -l
+...
+*** Running bash -l...
+# ls /etc/container_environment
+FOO  HELLO  HOME  HOSTNAME  PATH  TERM  container
+# cat /etc/container_environment/HELLO; echo
+my beautiful world
+# cat /etc/container_environment.json; echo
+{"TERM": "xterm", "container": "lxc", "HOSTNAME": "f45449f06950", "HOME": "/root", "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "FOO": "bar", "HELLO": "my beautiful world"}
+# source /etc/container_environment.sh
+# echo $HELLO
+my beautiful world
+```
 
 
 #### Modifying environment variables
@@ -158,8 +188,10 @@ Because environment variables can potentially contain sensitive information, `/e
 
 If you are sure that your environment variables don't contain sensitive data, then you can also relax the permissions on that directory and those files by making them world-readable:
 
-    RUN chmod 755 /etc/container_environment
-    RUN chmod 644 /etc/container_environment.sh /etc/container_environment.json
+```dockerfile
+RUN chmod 755 /etc/container_environment
+RUN chmod 644 /etc/container_environment.sh /etc/container_environment.json
+```
 
 
 ## Container administration
@@ -170,13 +202,17 @@ One of the ideas behind Docker is that containers should be stateless, easily re
 
 Normally, when you want to create a new container in order to run a single command inside it, and immediately exit after the command exits, you invoke Docker like this:
 
-    docker run YOUR_IMAGE COMMAND ARGUMENTS...
+```bash
+docker run YOUR_IMAGE COMMAND ARGUMENTS...
+```
 
 However the downside of this approach is that the init system is not started. That is, while invoking `COMMAND`, important daemons such as cron and syslog are not running. Also, orphaned child processes are not properly reaped, because `COMMAND` is PID 1.
 
 Baseimage-docker provides a facility to run a single one-shot command, while solving all of the aforementioned problems. Run a single command in the following manner:
 
-    docker run YOUR_IMAGE /sbin/my_init -- COMMAND ARGUMENTS ...
+```shell
+docker run YOUR_IMAGE /sbin/my_init -- COMMAND ARGUMENTS ...
+```
 
 This will perform the following:
 
@@ -187,22 +223,26 @@ This will perform the following:
 
 For example:
 
-    $ docker run quantumobject/docker-baseimage /sbin/my_init -- ls
-    *** Running /etc/rc.local...
-    *** Booting runit daemon...
-    *** Runit started as PID 80
-    *** Running ls...
-    bin  boot  dev  etc  home  image  lib  lib64  media  mnt  opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
-    *** ls exited with exit code 0.
-    *** Shutting down runit daemon (PID 80)...
-    *** Killing all processes...
+```shell
+$ docker run mjoseportfolio/ubuntu-bi /sbin/my_init -- ls
+*** Running /etc/rc.local...
+*** Booting runit daemon...
+*** Runit started as PID 80
+*** Running ls...
+bin  boot  dev  etc  home  image  lib  lib64  media  mnt  opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
+*** ls exited with exit code 0.
+*** Shutting down runit daemon (PID 80)...
+*** Killing all processes...
+```
 
 You may find that the default invocation is too noisy. Or perhaps you don't want to run the startup files. You can customize all this by passing arguments to `my_init`. Invoke `docker run YOUR_IMAGE /sbin/my_init --help` for more information.
 
 The following example runs `ls` without running the startup files and with less messages, while running all runit services:
 
-    $ docker run quantumobject/docker-baseimage /sbin/my_init --skip-startup-files --quiet -- ls
-    bin  boot  dev  etc  home  image  lib  lib64  media  mnt  opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
+```shell
+$ docker run mjoseportfolio/ubuntu-bi /sbin/my_init --skip-startup-files --quiet -- ls
+bin  boot  dev  etc  home  image  lib  lib64  media  mnt  opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
+```
 
 
 ### Running a command in an existing, running container
@@ -210,12 +250,19 @@ Running bash shell , or running a command inside it, via 'docker exec'
 
 To run the container's bash shell :
 
-    docker exec -it YOUR-CONTAINER-ID /bin/bash
-    
+```shell
+docker exec -it YOUR-CONTAINER-ID /bin/bash
+```
+
 You can lookup `YOUR-CONTAINER-ID` by running `docker ps`.
 
 You can also tell it to run a command, and then exit:
 
-    docker exec -it YOUR-CONTAINER-ID echo hello world
+```shell
+docker exec -it YOUR-CONTAINER-ID echo hello world
+```
 
-For additional info about us and our projects check our site [www.quantumobject.org](https://www.quantumobject.org)
+This image has been adapted from the source code from [www.quantumobject.org](https://www.quantumobject.org)
+
+For additional info about me and my projects check my site https://mjose-portfolio.github.io/
+

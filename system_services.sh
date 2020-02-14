@@ -86,10 +86,11 @@ rm -f /etc/cron.weekly/fstrim
 $minimal_apt_get_install curl less vim psmisc wget zsh git
 
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="bureau"/g' ~/.zshrc #> /dev/null
 
 #fix other small problem.
 rm /bin/sh
-ln -s /bin/zsh /bin/sh
+ln -s /bin/bash /bin/sh
 echo `. /etc/lsb-release; echo ${DISTRIB_CODENAME/*, /}` >> /etc/container_environment/DISTRIB_CODENAME
 
 #cleanup

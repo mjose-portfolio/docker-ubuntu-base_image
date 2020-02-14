@@ -1,4 +1,4 @@
-Jenkinsfile (Declarative Pipeline)
+Jenkinsfile (ubuntu-bi)
 pipeline {
     agent { dockerfile true }
     stages {

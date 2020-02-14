@@ -1,4 +1,4 @@
-![Ubuntu_Logo](./resources/Ubuntu_Logo.png)
+![Ubuntu_Logo](./docs/resources/Ubuntu_Logo.png)
 
 # docker-ubuntu-base_image
 

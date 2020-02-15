@@ -6,19 +6,39 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh '''
-        if [ "${GIT_BRANCH}" = "master" ]; then
-          docker build . -t mjoseportfolio/ubuntu-bi:latest
-        elif [ "${GIT_BRANCH}" = "v16.04" ]; then
-          docker build . -t mjoseportfolio/ubuntu-bi:version-16.04
-        elif [ "${GIT_BRANCH}" = "v17.04" ]; then
-          docker build . -t mjoseportfolio/ubuntu-bi:version-17.04
-        elif [ "${GIT_BRANCH}" = "v18.04" ]; then
-          docker build . -t mjoseportfolio/ubuntu-bi:version-18.04
-        elif [ "${GIT_BRANCH}" = "v19.04" ]; then
-          docker build . -t mjoseportfolio/ubuntu-bi:version-19.04
-        fi
-        '''
+        sh 'docker build . -t mjoseportfolio/ubuntu-bi:latest'
+      }
+    }
+    stage('Build v16.04') {
+      when {
+        branch 'v16.04'
+      }
+      steps {
+        sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-16.04'
+      }
+    }
+    stage('Build v17.04') {
+      when {
+        branch 'v17.04'
+      }
+      steps {
+        sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-17.04'
+      }
+    }
+    stage('Build v18.04') {
+      when {
+        branch 'v18.04'
+      }
+      steps {
+        sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-18.04'
+      }
+    }
+    stage('Build v19.04') {
+      when {
+        branch 'v19.04'
+      }
+      steps {
+        sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-19.04'
       }
     }
   }

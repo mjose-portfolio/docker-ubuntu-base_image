@@ -3,7 +3,10 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build .'
+        when {
+          branch 'master'
+        }
+        sh 'docker build . -t mjoseportfolio/ubuntu-bi:latest'
       }
     }
 

@@ -3,10 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        when {
-          branch 'master'
-        }
-        sh 'docker build . -t mjoseportfolio/ubuntu-bi:latest'
+        sh '''echo ${GIT_BRANCH}
+if [ "${GIT_BARCH} = "origin/master" ]; then
+docker build . -t mjoseportfolio/ubuntu-bi:latest'''
       }
     }
 

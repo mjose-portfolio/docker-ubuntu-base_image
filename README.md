@@ -1,10 +1,12 @@
-![Ubuntu_Logo](./resources/Ubuntu_Logo.png)
+![Ubuntu_Logo](./docs/resources/Ubuntu_Logo.png)
 
 # docker-ubuntu-base_image
 
 Ubuntu base image for docker container. https://mjose-portfolio.github.io/
 
-The docker-ubuntu-base_image base on ubuntu with runit to be able to run different process inside the container. It is using default tools already include in runit for logs, cron, etc (svlogd, crond, pstree, sv,chpst). it support tags (version-16.04, version-17.04, version-18.04 and version-19.04)
+![Docker](https://github.com/mjose-portfolio/docker-ubuntu-base_image/workflows/Docker/badge.svg)![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/mjoseportfolio/ubuntu-bi?logo=Docker)![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/mjoseportfolio/ubuntu-bi?logo=docker)
+
+The docker-ubuntu-base_image base on ubuntu with runit to be able to run different process inside the container. It is using default tools already include in runit for logs, cron, etc (svlogd, crond, pstree, sv,chpst). it support tags (16.04, 17.04, 18.04 and 19.04)
 
 This image will be use to builds others image for other projects. It will be build periodical to make sure that any security update is include with the last version from ubuntu repository.
 
@@ -153,23 +155,7 @@ The multiple formats makes it easy for you to query the original environment var
 
 Here is an example shell session showing you how the dumps look like:
 
-```shell
-$ docker run -t -i \
-  --env FOO=bar --env HELLO='my beautiful world' \
-  mjoseportfolio/ubuntu-bi /sbin/my_init -- \
-  bash -l
-...
-*** Running bash -l...
-# ls /etc/container_environment
-FOO  HELLO  HOME  HOSTNAME  PATH  TERM  container
-# cat /etc/container_environment/HELLO; echo
-my beautiful world
-# cat /etc/container_environment.json; echo
-{"TERM": "xterm", "container": "lxc", "HOSTNAME": "f45449f06950", "HOME": "/root", "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "FOO": "bar", "HELLO": "my beautiful world"}
-# source /etc/container_environment.sh
-# echo $HELLO
-my beautiful world
-```
+![dumps](./docs/resources/dumps.gif)
 
 
 #### Modifying environment variables
@@ -223,26 +209,13 @@ This will perform the following:
 
 For example:
 
-```shell
-$ docker run mjoseportfolio/ubuntu-bi /sbin/my_init -- ls
-*** Running /etc/rc.local...
-*** Booting runit daemon...
-*** Runit started as PID 80
-*** Running ls...
-bin  boot  dev  etc  home  image  lib  lib64  media  mnt  opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
-*** ls exited with exit code 0.
-*** Shutting down runit daemon (PID 80)...
-*** Killing all processes...
-```
+![dumps](./docs/resources/standard_ls_example.gif)
 
-You may find that the default invocation is too noisy. Or perhaps you don't want to run the startup files. You can customize all this by passing arguments to `my_init`. Invoke `docker run YOUR_IMAGE /sbin/my_init --help` for more information.
+ Perhaps you don't want to run the startup files. You can customize all this by passing arguments to `my_init`. Invoke `docker run YOUR_IMAGE /sbin/my_init --help` for more information.
 
-The following example runs `ls` without running the startup files and with less messages, while running all runit services:
+The following example runs `ls` without running the startup files, while running all runit services:
 
-```shell
-$ docker run mjoseportfolio/ubuntu-bi /sbin/my_init --skip-startup-files --quiet -- ls
-bin  boot  dev  etc  home  image  lib  lib64  media  mnt  opt  proc  root  run  sbin  selinux  srv  sys  tmp  usr  var
-```
+![dumps](./docs/resources/skip_ls_example.gif)
 
 
 ### Running a command in an existing, running container

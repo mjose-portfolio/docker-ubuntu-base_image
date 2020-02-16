@@ -17,6 +17,7 @@ pipeline {
         environment {
           dockerTAG = 'version-16.04'
         }
+      }
       when {
         branch 'v17.04'
       }
@@ -24,6 +25,7 @@ pipeline {
         environment {
           dockerTAG = 'version-17.04'
         }
+      }
       when {
         branch 'v18.04'
       }
@@ -31,6 +33,7 @@ pipeline {
         environment {
           dockerTAG = 'version-18.04'
         }
+      }
       when {
         branch 'v19.04'
       }

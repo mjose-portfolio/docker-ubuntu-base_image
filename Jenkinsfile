@@ -1,45 +1,63 @@
 pipeline {
   agent any
   stages {
-    stage('Set image tag name') {
+    stage('latest') {
       when {
         branch 'master'
       }
-      steps {
-        environment {
-          dockerTAG = 'latest'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:latest'
+          }
         }
       }
+    }
+    stage('v16.04') {
       when {
         branch 'v16.04'
       }
-      steps {
-        environment {
-          dockerTAG = 'version-16.04'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-16.04'
+          }
         }
       }
+    }
+    stage('v17.04') {
       when {
         branch 'v17.04'
       }
-      steps {
-        environment {
-          dockerTAG = 'version-17.04'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-17.04'
+          }
         }
       }
+    }
+    stage('v18.04') {
       when {
         branch 'v18.04'
       }
-      steps {
-        environment {
-          dockerTAG = 'version-18.04'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-18.04'
+          }
         }
       }
+    }
+    stage('v19.04') {
       when {
         branch 'v19.04'
       }
-      steps {
-        environment {
-          dockerTAG = 'version-19.04'
+      parallel {
+        stage('Build') {
+          steps {
+          sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-19.04'
+          }
         }
       }
     }

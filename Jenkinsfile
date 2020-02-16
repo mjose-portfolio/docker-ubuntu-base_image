@@ -6,9 +6,11 @@ pipeline {
         branch 'master'
       }
       parallel {
-        stage('Build') {
-          steps {
-            sh 'docker build . -t mjoseportfolio/ubuntu-bi:latest'
+        withEnv(["TAG=latest"]) { 
+          stage('Build') {
+            steps {
+              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+            }
           }
         }
       }
@@ -18,9 +20,11 @@ pipeline {
         branch 'v16.04'
       }
       parallel {
-        stage('Build') {
-          steps {
-            sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-16.04'
+        withEnv(["TAG=version-16.04"]) { 
+          stage('Build') {
+            steps {
+              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+            }
           }
         }
       }
@@ -30,9 +34,11 @@ pipeline {
         branch 'v17.04'
       }
       parallel {
-        stage('Build') {
-          steps {
-            sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-17.04'
+        withEnv(["TAG=version-17.04"]) { 
+          stage('Build') {
+            steps {
+              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+            }
           }
         }
       }
@@ -42,9 +48,11 @@ pipeline {
         branch 'v18.04'
       }
       parallel {
-        stage('Build') {
-          steps {
-            sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-18.04'
+        withEnv(["TAG=version-18.04"]) { 
+          stage('Build') {
+            steps {
+              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+            }
           }
         }
       }
@@ -54,9 +62,11 @@ pipeline {
         branch 'v19.04'
       }
       parallel {
-        stage('Build') {
-          steps {
-          sh 'docker build . -t mjoseportfolio/ubuntu-bi:version-19.04'
+        withEnv(["TAG=version-19.04"]) { 
+          stage('Build') {
+            steps {
+              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+            }
           }
         }
       }

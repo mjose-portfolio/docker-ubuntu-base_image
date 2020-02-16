@@ -29,7 +29,7 @@ pipeline {
 //      }
 //      environment {
 //        dockerTAG = 'latest'
-      }
+//      }
       steps {
         sh 'docker build . -t mjoseportfolio/ubuntu-bi:${dockerTAG}'
       }

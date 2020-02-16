@@ -61,10 +61,5 @@ pipeline {
         }
       }
     }
-    stage('Build') {
-      steps {
-        sh 'docker build . -t mjoseportfolio/ubuntu-bi:${dockerTAG}'
-      }
-    }
   }
 }

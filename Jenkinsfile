@@ -6,11 +6,12 @@ pipeline {
         branch 'master'
       }
       parallel {
-        withEnv(["TAG=latest"]) { 
-          stage('Build') {
-            steps {
-              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+        stage('Build') {
+          steps {
+            script {
+              env.TAG = "latest"
             }
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
@@ -20,11 +21,12 @@ pipeline {
         branch 'v16.04'
       }
       parallel {
-        withEnv(["TAG=version-16.04"]) { 
-          stage('Build') {
-            steps {
-              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+        stage('Build') {
+          steps {
+            script {
+              env.TAG = "version-16.04"
             }
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
@@ -34,11 +36,12 @@ pipeline {
         branch 'v17.04'
       }
       parallel {
-        withEnv(["TAG=version-17.04"]) { 
-          stage('Build') {
-            steps {
-              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+        stage('Build') {
+          steps {
+            script {
+              env.TAG = "version-16.04"
             }
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
@@ -48,11 +51,12 @@ pipeline {
         branch 'v18.04'
       }
       parallel {
-        withEnv(["TAG=version-18.04"]) { 
-          stage('Build') {
-            steps {
-              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+        stage('Build') {
+          steps {
+            script {
+              env.TAG = "version-18.04"
             }
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
@@ -62,11 +66,12 @@ pipeline {
         branch 'v19.04'
       }
       parallel {
-        withEnv(["TAG=version-19.04"]) { 
-          stage('Build') {
-            steps {
-              sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+        stage('Build') {
+          steps {
+            script {
+              env.TAG = "version-16.04"
             }
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }

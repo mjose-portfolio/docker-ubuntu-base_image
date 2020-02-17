@@ -1,12 +1,12 @@
 pipeline {
   agent any
   stages {
-    stage('latest') {
-      when {
-        branch 'master'
-      }
+    stage('build') {
       parallel {
-        stage('Build') {
+        stage('latest') {
+          when {
+            branch 'master'
+          }
           steps {
             script {
               env.TAG = "latest"
@@ -14,30 +14,10 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage('Test') {
-          steps {
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+        stage('16.04') {
+          when {
+            branch 'v16.04'
           }
-        }
-        stage('Pull') {
-          steps {
-            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-        stage('clean') {
-          steps {
-            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-      }
-    }
-    stage('v16.04') {
-      when {
-        branch 'v16.04'
-      }
-      parallel {
-        stage('Build') {
           steps {
             script {
               env.TAG = "version-16.04"
@@ -45,61 +25,21 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage('Test') {
-          steps {
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+        stage('17.04') {
+          when {
+            branch 'v17.04'
           }
-        }
-        stage('Pull') {
-          steps {
-            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-        stage('clean') {
-          steps {
-            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-      }
-    }
-    stage('v17.04') {
-      when {
-        branch 'v17.04'
-      }
-      parallel {
-        stage('Build') {
           steps {
             script {
-              env.TAG = "version-16.04"
+              env.TAG = "version-17.04"
             }
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage('Test') {
-          steps {
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+        stage('18.04') {
+          when {
+            branch 'v18.04'
           }
-        }
-        stage('Pull') {
-          steps {
-            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-        stage('clean') {
-          steps {
-            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-      }
-    }
-    stage('v18.04') {
-      when {
-        branch 'v18.04'
-      }
-      parallel {
-        stage('Build') {
           steps {
             script {
               env.TAG = "version-18.04"
@@ -107,53 +47,195 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage('Test') {
+        stage('19.04') {
           steps {
+            script {
+              env.TAG = "version-19.04"
+            }
+            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+      }
+    }
+    stage('Test') {
+      parallel {
+        stage('latest') {
+          when {
+            branch 'master'
+          }
+          steps {
+            script {
+              env.TAG = "latest"
+            }
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
           }
         }
-        stage('Pull') {
+        stage('16.04') {
+          when {
+            branch 'v16.04'
+          }
           steps {
+            script {
+              env.TAG = "version-16.04"
+            }
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage('17.04') {
+          when {
+            branch 'v17.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-17.04"
+            }
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage('18.04') {
+          when {
+            branch 'v18.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-18.04"
+            }
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage('19.04') {
+          when {
+            branch 'v19.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-19.04"
+            }
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+      }
+    }
+    stage('Pull') {
+      parallel {
+        stage('latest') {
+          when {
+            branch 'master'
+          }
+          steps {
+            script {
+              env.TAG = "latest"
+            }
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage('clean') {
+        stage('16.04') {
           steps {
+            script {
+              env.TAG = "version-16.04"
+            }
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('17.04') {
+          when {
+            branch 'v17.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-17.04"
+            }
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('18.04') {
+          when {
+            branch 'v18.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-18.04"
+            }
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('19.04') {
+          when {
+            branch 'v19.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-19.04"
+            }
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+      }
+    }
+    stage('Clean') {
+      parallel {
+        stage('latest') {
+          when {
+            branch 'master'
+          }
+          steps {
+            script {
+              env.TAG = "latest"
+            }
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('16.04') {
+          steps {
+            script {
+              env.TAG = "version-16.04"
+            }
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('17.04') {
+          when {
+            branch 'v17.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-17.04"
+            }
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('18.04') {
+          when {
+            branch 'v18.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-18.04"
+            }
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage('19.04') {
+          when {
+            branch 'v19.04'
+          }
+          steps {
+            script {
+              env.TAG = "version-19.04"
+            }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
     }
-    stage('v19.04') {
-      when {
-        branch 'v19.04'
-      }
-      parallel {
-        stage('Build') {
-          steps {
-            script {
-              env.TAG = "version-16.04"
-            }
-            sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-        stage('Test') {
-          steps {
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
-            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
-          }
-        }
-        stage('Pull') {
-          steps {
-            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
-        stage('Clean') {
-          steps {
-            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
-          }
-        }
+    stage('Clean Ubuntu') {
+      steps {
+        sh 'docker images -a | grep "ubuntu" | awk '{print $3}' | xargs docker rmi'
       }
     }
   }

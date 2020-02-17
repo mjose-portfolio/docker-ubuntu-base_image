@@ -14,7 +14,7 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage ('Test') {
+        stage('Test') {
           steps {
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
@@ -157,7 +157,7 @@ pipeline {
       }
     }
   }
-  stage ('Clean Ubuntu') {
+  stage('Clean Ubuntu') {
     step {
       sh 'docker images -a | grep "ubuntu" | awk '{print $3}' | xargs docker rmi'
     }

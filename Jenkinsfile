@@ -194,7 +194,7 @@ pipeline {
               env.TAG = "latest"
             }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
-            sh 'docker rmi -f ubuntu-bi:${TAG}'
+            sh 'docker rmi -f ubuntu:${TAG}'
           }
         }
         stage('16.04') {

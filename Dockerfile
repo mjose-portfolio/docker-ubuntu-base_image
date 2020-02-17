@@ -2,7 +2,7 @@
 # Build-time metadata as defined at http://label-schema.org
 #name of container: nagios
 #this image is an adaptation of: quantumobject/docker-baseimage:18.04
-FROM ubuntu:16.04
+FROM ubuntu:latest
 MAINTAINER Marc Jose Rubio  "marc.jose.porfolio@gmail.com"
 
 ADD . /build

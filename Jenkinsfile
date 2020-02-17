@@ -188,14 +188,17 @@ pipeline {
               env.TAG = "latest"
             }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+            sh 'docker rmi -f ubuntu-bi:${TAG}'
           }
         }
         stage('16.04') {
           steps {
             script {
+              env.UTAG = "16.04"
               env.TAG = "version-16.04"
             }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+            sh 'docker rmi -f ubuntu:${UTAG}'
           }
         }
         stage('17.04') {
@@ -205,8 +208,10 @@ pipeline {
           steps {
             script {
               env.TAG = "version-17.04"
+              env.UTAG = "17.04"
             }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+            sh 'docker rmi -f ubuntu:${UTAG}'
           }
         }
         stage('18.04') {
@@ -216,8 +221,10 @@ pipeline {
           steps {
             script {
               env.TAG = "version-18.04"
+              env.UTAG = "18.04"
             }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+            sh 'docker rmi -f ubuntu:${UTAG}'
           }
         }
         stage('19.04') {
@@ -227,15 +234,12 @@ pipeline {
           steps {
             script {
               env.TAG = "version-19.04"
+              env.UTAG = "19.04"
             }
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+            sh 'docker rmi -f ubuntu:${UTAG}'
           }
         }
-      }
-    }
-    stage('Clean Ubuntu') {
-      steps {
-        sh 'docker images -a | grep "ubuntu" | awk '{print $3}' | xargs docker rmi'
       }
     }
   }

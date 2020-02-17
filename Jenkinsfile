@@ -21,12 +21,12 @@ pipeline {
           }
         }
         stage('Pull') {
-          step {
+          steps {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
         stage('clean') {
-          step {
+          steps {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
@@ -52,12 +52,12 @@ pipeline {
           }
         }
         stage('Pull') {
-          step {
+          steps {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
         stage('clean') {
-          step {
+          steps {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
@@ -83,12 +83,12 @@ pipeline {
           }
         }
         stage('Pull') {
-          step {
+          steps {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
         stage('clean') {
-          step {
+          steps {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
@@ -114,12 +114,12 @@ pipeline {
           }
         }
         stage('Pull') {
-          step {
+          steps {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
         stage('clean') {
-          step {
+          steps {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
@@ -145,12 +145,12 @@ pipeline {
           }
         }
         stage('Pull') {
-          step {
+          steps {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
         stage('Clean') {
-          step {
+          steps {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
@@ -158,7 +158,7 @@ pipeline {
     }
   }
   stage('Clean Ubuntu') {
-    step {
+    steps {
       sh 'docker images -a | grep "ubuntu" | awk '{print $3}' | xargs docker rmi'
     }
   }

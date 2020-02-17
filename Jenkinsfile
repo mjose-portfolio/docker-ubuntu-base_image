@@ -45,18 +45,18 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage ('Test') {
+        stage('Test') {
           steps {
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
           }
         }
-        stage {'Pull'} {
+        stage('Pull') {
           step {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage {'clean'} {
+        stage('clean') {
           step {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
@@ -76,18 +76,18 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage ('Test') {
+        stage('Test') {
           steps {
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
           }
         }
-        stage {'Pull'} {
+        stage('Pull') {
           step {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage {'clean'} {
+        stage('clean') {
           step {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
@@ -107,18 +107,18 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage ('Test') {
+        stage('Test') {
           steps {
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
           }
         }
-        stage {'Pull'} {
+        stage('Pull') {
           step {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage {'clean'} {
+        stage('clean') {
           step {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
@@ -138,18 +138,18 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage ('Test') {
+        stage('Test') {
           steps {
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
             sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
           }
         }
-        stage {'Pull'} {
+        stage('Pull') {
           step {
             sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
-        stage {'Clean'} {
+        stage('Clean') {
           step {
             sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }

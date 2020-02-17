@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  triggers {
+    cron('H 7 0 0 0')
+  }  
   stages {
     stage('build') {
       parallel {

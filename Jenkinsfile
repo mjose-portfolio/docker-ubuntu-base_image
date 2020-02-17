@@ -156,11 +156,5 @@ pipeline {
         }
       }
     }
-    
-    stage('Clean Ubuntu') {
-      steps {
-        sh 'docker images -a | grep "ubuntu" | awk '{print $3}' | xargs docker rmi'
-      }
-    }
   }
 }

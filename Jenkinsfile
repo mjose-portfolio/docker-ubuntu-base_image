@@ -48,6 +48,9 @@ pipeline {
           }
         }
         stage('19.04') {
+          when {
+            branch 'v19.04'
+          }
           steps {
             script {
               env.TAG = "version-19.04"
@@ -135,6 +138,9 @@ pipeline {
           }
         }
         stage('16.04') {
+          when {
+            branch 'v16.04'
+          }
           steps {
             script {
               env.TAG = "version-16.04"
@@ -192,6 +198,9 @@ pipeline {
           }
         }
         stage('16.04') {
+          when {
+            branch 'v16.04'
+          }
           steps {
             script {
               env.UTAG = "16.04"

@@ -14,6 +14,22 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
+        stage ('Test') {
+          steps {
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage {'Pull'} {
+          step {
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage {'clean'} {
+          step {
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
       }
     }
     stage('v16.04') {
@@ -27,6 +43,22 @@ pipeline {
               env.TAG = "version-16.04"
             }
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage ('Test') {
+          steps {
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage {'Pull'} {
+          step {
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage {'clean'} {
+          step {
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
@@ -44,6 +76,22 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
+        stage ('Test') {
+          steps {
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage {'Pull'} {
+          step {
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage {'clean'} {
+          step {
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
       }
     }
     stage('v18.04') {
@@ -57,6 +105,22 @@ pipeline {
               env.TAG = "version-18.04"
             }
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage ('Test') {
+          steps {
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage {'Pull'} {
+          step {
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage {'clean'} {
+          step {
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
       }
@@ -74,7 +138,28 @@ pipeline {
             sh 'docker build . -t mjoseportfolio/ubuntu-bi:${TAG}'
           }
         }
+        stage ('Test') {
+          steps {
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init -- ls'
+            sh 'docker run mjoseportfolio/ubuntu-bi:${TAG} /sbin/my_init --skip-startup-files -- ls'
+          }
+        }
+        stage {'Pull'} {
+          step {
+            sh 'docker push mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
+        stage {'Clean'} {
+          step {
+            sh 'docker rmi -f mjoseportfolio/ubuntu-bi:${TAG}'
+          }
+        }
       }
+    }
+  }
+  stage ('Clean Ubuntu') {
+    step {
+      sh 'docker images -a | grep "ubuntu" | awk '{print $3}' | xargs docker rmi'
     }
   }
 }
